@@ -18,7 +18,7 @@ class GoogleDocReferenceDivStyleGuide:
         dictionary = variable
         self.URLtoGoogleDocJSONtoText()
         self.cleaningText()
-        self.referenceStyleGuide()
+        self.referenceStyleGuide(dictionary)
         
         
     def docIDfromURL(self):
@@ -32,7 +32,7 @@ class GoogleDocReferenceDivStyleGuide:
     def Authenticate(self):
         extracted_text = []
         print("authenticating ...")
-        appflow = flow.InstalledAppFlow.from_client_secrets_file(r"YOUR API SECRETS FILEPATH HERE",scopes=["https://www.googleapis.com/auth/drive.readonly"]
+        appflow = flow.InstalledAppFlow.from_client_secrets_file(r"YOUR API FILE PATH HERE",scopes=["https://www.googleapis.com/auth/drive.readonly"]
         )
         launch_browser=True
 
@@ -85,10 +85,11 @@ class GoogleDocReferenceDivStyleGuide:
     
     def ScrapeAndReference(self):
         
-        self.StyleGuideScraper()
+        dictionary = self.StyleGuideScraper()
         self.URLtoGoogleDocJSONtoText()
         self.cleaningText()
-        self.referenceStyleGuide()
+       
+        self.referenceStyleGuide(dictionary)
         
         
     def StyleGuideScraper(self):
@@ -113,12 +114,14 @@ class GoogleDocReferenceDivStyleGuide:
 
             dictionary[txt_def] = defin.text
         print('Completed scrape\r\n\r\n')
-        self.cleanScrapedStyleguide()
+        dictionary = self.cleanScrapedStyleguide(dictionary)
+        
         return dictionary
         
         
-    def cleanScrapedStyleguide(self):
+    def cleanScrapedStyleguide(self,var):
         print('cleaning scraped text ...')
+        dictionary = var
         for x in dictionary:
             split = dictionary[x].splitlines()
             for y in split:
@@ -142,6 +145,7 @@ class GoogleDocReferenceDivStyleGuide:
 
             dictionary[x] = split
         print('cleaned\r\n\r\n')
+        return dictionary
 
 
     def cleaningText(self):
@@ -177,7 +181,8 @@ class GoogleDocReferenceDivStyleGuide:
         print('removed quotes')
     
         
-    def referenceStyleGuide(self):
+    def referenceStyleGuide(self, var):
+        dictionary = var
         print('beginning reference ...\r\n\r\n\r\n')
         for x in dictionary:
             
