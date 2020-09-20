@@ -6,9 +6,7 @@ Before you use the code, you'll need to set up a google app scrips api.
 
 First, go to the [Google Cloud Platform](https://console.cloud.google.com/). Create a new project, and go into the API settings. Create an OAuth 2.0 client id for desktop. Download the json access file.
 
-Now, in the code, you'll have to make one change in order to access your API.
-
-On line 35, change the `YOUR API FILE PATH HERE` to the filepath for the file you just downloaded. 
+Now, in the code, you'll have to make one change in order to access your API. In the `__init__` method, replace `YOUR API KEY FILENAME HERE` with the filepath for the file you just downloaded
 
 ## How to use
 There are two ways to run this script: either scrape the Diversity Style Guide and reference with a Google Doc all at once, or save the scraped style guide as a variable, so you can reference multiple docs in a row.
