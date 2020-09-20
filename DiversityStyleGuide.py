@@ -1,3 +1,15 @@
+from __future__ import print_function
+import requests
+from bs4 import BeautifulSoup
+import json
+import pickle
+import os.path
+from googleapiclient.discovery import build
+from google_auth_oauthlib.flow import InstalledAppFlow
+from google.auth.transport.requests import Request
+from google_auth_oauthlib import flow
+
+
 class GoogleDocReferenceDivStyleGuide:
     def __init__(self,url):
         self.url = url
