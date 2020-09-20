@@ -13,6 +13,7 @@ from google_auth_oauthlib import flow
 class GoogleDocReferenceDivStyleGuide:
     def __init__(self,url):
         self.url = url
+        self.API_KEY = r'YOUR API KEY FILENAME HERE'
         
     
     def justReference(self, variable):
@@ -34,7 +35,7 @@ class GoogleDocReferenceDivStyleGuide:
     def Authenticate(self):
         extracted_text = []
         print("authenticating ...")
-        appflow = flow.InstalledAppFlow.from_client_secrets_file(r"C:\Users\Ethan Coston\Desktop\client_secret_883115423488-r97oa086lvgqembkqmkr34u04iqlso5a.apps.googleusercontent.com.json",scopes=["https://www.googleapis.com/auth/drive.readonly"]
+        appflow = flow.InstalledAppFlow.from_client_secrets_file(self.API_KEY,scopes=["https://www.googleapis.com/auth/drive.readonly"]
         )
         launch_browser=True
         if launch_browser==False:
