@@ -2,36 +2,25 @@
 Scrapes the Diversity Style Guide, references a google doc, and returns style guide entries that appear in the doc
 
 ## About the code
-The code is fairly easy to use, but before you use it, you'll need to set up a google app scrips api, which is super simple
-First, go to the [Google Cloud Platform](https://console.cloud.google.com/). Create a new project, and go into the API settings. Create an OAuth 2.0 client id for desktop. Download the json access file.
+I created this to encourage more newsrooms to adopt the Diversity Style Guide and to make it easier for writers and editors to ensure they're following the Diversity Style Guide guidelines. However, this isn't a replacement for checking the [Diversity Style Guide website](https://www.diversitystyleguide.com/), especially for sensitive stories.
 
-Now, in the code, you'll have to make one change in order to access your API.
-On line 35, change the `YOUR API FILE PATH HERE` to the filepath for the file you just downloaded. 
+## Getting started
+Before you use the code, you'll need to set up a google app scrips api.
+
+First, go to the [Google Cloud Platform](https://console.cloud.google.com/). Create a new project, and go into the API settings. Create an OAuth 2.0 client id for desktop. Download the json access file. You will need the filepath later.
+
+There are two ways to add the filepath. First, you can use the `GoogleDocReferenceDivStyleGuide().API_KEY_init()` method. Or, you can skip to the run method. If the API key is missing, it will ask for it and save the variable locally.
 
 ## How to use
-This tool is fairly simple, but I've broken down different ways to use it below.
+In order to run the script, import DiversityStyleGuide as a module and then use the run function:
+```
+from DiversityStyleGuide import GoogleDocReferenceDivStyleGuide
 
-### Scrape and Reference a doc all at once
-If you want to scrape the style guide and reference a doc all at once, use the following code. This is easiest when you only have one doc to read.
-```python
-url = GoogleDocReferenceDivStyleGuide(#url to google doc here)
-url.ScrapeAndReference()
+GoogleDocReferenceDivStyleGuide().run()
 ```
 
-It will return the the character number of the word where it appears in the doc, the term, and guidance from the style guide on how to use the term.
+The first time you run the function, it will scrape the Diversity Style Guide from its website and save locally (using pickle). Every other time, it will ask you if you want to rescrape or use the version saved locally.
 
+When it runs the Google oauth, it will ask you if you want to save the oauth for future use, so you don't have to reauthenticate every time you run the program. If you choose not to save, next time you run the program, you'll have to reauthenticate. If you save authentication, each future use will ask you if you want to use the saved oauth authentication or reauthenticate.
 
-### just scrape and individually reference
-This is useful for when you have multiple docs to reference and don't want to rescrape the style guide each time
-
-To scrape the style guide:
-```python
-DiversityStyleGuide = GoogleDocReferenceDivStyleGuide('').StyleGuideScraper()
-```
-If you print the `DiversityStyleGuide` variable, it will show a python dictionary of the style guide.
-
-To reference a doc:
-```python
-url = GoogleDocReferenceDivStyleGuide(#url to google doc here)
-url.justReference(DiversityStyleGuide)
-```
+The run method can scrape and reference up to five Google Docs. The more you scrape at one time, the more scrolling you'll have to do once the program finishes running. It will ask you how many you want to scrape. For each, it will then ask you for the url of the Doc. It will iterate through each Doc, reading the text and referencing with the scraped Diversity Style Guide
