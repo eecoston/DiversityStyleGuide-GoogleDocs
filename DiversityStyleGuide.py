@@ -9,47 +9,44 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from google_auth_oauthlib import flow
 
-
 class GoogleDocReferenceDivStyleGuide:
-<<<<<<< HEAD
-    def __init__(self):
-        return 'nada'
         
-    def run(self):
-        if path.exists('style_guide.pickle') == True:
-            useStyleGuide = input('Do you want to use the Diversity Style Guide on file or rescrape? (use/rescrape)').lower()
-            if useStyleGuide == 'use':
-                with open('style_guide.pickle','rb') as f:
-                    dictionary = pickle.load(f)
-            else:
-                dictionary = self.cleanScrapedStyleguide(self.StyleGuideScraper())
-                with open('style_guide.pickle','wb') as f:
-                    pickle.dump(dictionary,f)
+        
+def run(self):
+    if path.exists('style_guide.pickle') == True:
+        useStyleGuide = input('Do you want to use the Diversity Style Guide on file or rescrape? (use/rescrape)').lower()
+        if useStyleGuide == 'use':
+            with open('style_guide.pickle','rb') as f:
+                dictionary = pickle.load(f)
         else:
             dictionary = self.cleanScrapedStyleguide(self.StyleGuideScraper())
-            print('saving style guide locally (the run module will give you the option to either use the download or rescrape)')
             with open('style_guide.pickle','wb') as f:
                 pickle.dump(dictionary,f)
-            print('saved')
-        self.Authentication()
-        docs_to_scrape = {}
+    else:
+        dictionary = self.cleanScrapedStyleguide(self.StyleGuideScraper())
+        print('saving style guide locally (the run module will give you the option to either use the download or rescrape)')
+        with open('style_guide.pickle','wb') as f:
+            pickle.dump(dictionary,f)
+        print('saved')
+    self.Authentication()
+    docs_to_scrape = {}
+    docs = input('How many docs do you want to scrape?(up to 5)')
+    docs = int(docs)
+    if docs > 5:
+        print('Please enter a number up to 5')
         docs = input('How many docs do you want to scrape?(up to 5)')
-        docs = int(docs)
-        if docs > 5:
-            print('Please enter a number up to 5')
-            docs = input('How many docs do you want to scrape?(up to 5)')
-        doc_count = 1
-        while doc_count <= docs:
-            docs_to_scrape[doc_count] = input('enter the url for doc ' + str(doc_count))
-            doc_count = doc_count + 1
-        for x in docs_to_scrape:
-            self.url = docs_to_scrape[x]
-            self.docIDfromURL()
-            self.URLtoGoogleDocJSONtoText()
-            self.cleaningText()
-            self.referenceStyleGuide(dictionary)
-            print('\r\n\r\n\r\n')
-
+    doc_count = 1
+    while doc_count <= docs:
+        docs_to_scrape[doc_count] = input('enter the url for doc ' + str(doc_count))
+        doc_count = doc_count + 1
+    for x in docs_to_scrape:
+        self.url = docs_to_scrape[x]
+        self.docIDfromURL()
+        self.URLtoGoogleDocJSONtoText()
+        self.cleaningText()
+        self.referenceStyleGuide(dictionary)
+        print('\r\n\r\n\r\n')
+            
             
     def API_KEY_init(self):
         self.API_KEY = r''+input("Enter API KEY Filepath")
@@ -75,11 +72,6 @@ class GoogleDocReferenceDivStyleGuide:
         with open('API.pickle', 'wb') as f:
             pickle.dump(self.API_KEY, f)
         return (self.API_KEY)
-=======
-    def __init__(self,url):
-        self.url = url
-        self.API_KEY = r'YOUR API KEY FILENAME HERE'
->>>>>>> 22304cb4bc450cdcff1e1966fef1f2b9326bc29c
         
     
     def justReference(self, variable):
@@ -120,14 +112,10 @@ class GoogleDocReferenceDivStyleGuide:
     def Authenticate(self):
         
         print("authenticating ...")
-<<<<<<< HEAD
         with open('API.pickle', 'rb') as f:
             self.API_KEY = pickle.load(f) 
         try:
             appflow = flow.InstalledAppFlow.from_client_secrets_file(self.API_KEY,scopes=["https://www.googleapis.com/auth/drive.readonly"]
-=======
-        appflow = flow.InstalledAppFlow.from_client_secrets_file(self.API_KEY,scopes=["https://www.googleapis.com/auth/drive.readonly"]
->>>>>>> 22304cb4bc450cdcff1e1966fef1f2b9326bc29c
         )
         except:
             print('API KEY not valid\r\n\r\n')
@@ -156,19 +144,9 @@ class GoogleDocReferenceDivStyleGuide:
         document = service.documents().get(documentId=self.url).execute()
         extracted_json = json.dumps(document, indent=4, sort_keys=True)
         print("extraction complete\r\n\r\n\r\n")
-<<<<<<< HEAD
         
         self.docIDfromURL()
         text = extracted_json
-=======
-        return extracted_json
-    
-    
-    def URLtoGoogleDocJSONtoText(self):
-        
-        self.docIDfromURL()
-        text = self.Authenticate()
->>>>>>> 22304cb4bc450cdcff1e1966fef1f2b9326bc29c
         print('Exporting text from Google Doc ...')
         article_as_dict = json.loads(text)
         text_as_dict = article_as_dict['body']['content']
@@ -179,22 +157,15 @@ class GoogleDocReferenceDivStyleGuide:
             if "paragraph" in text_as_dict[counter]:
                 paragr = text_as_dict[counter]['paragraph']['elements']
                 if len(paragr) == 1:
-<<<<<<< HEAD
 
                     text_as_list.append(paragr[0]['textRun']['content'])
 
-=======
-                    text_as_list.append(paragr[0]['textRun']['content'])
->>>>>>> 22304cb4bc450cdcff1e1966fef1f2b9326bc29c
                 else:
                     counter2 = 0
                     while counter2 <= (len(paragr)-1):
                         if "textRun" in paragr[counter2]:
                             text_as_list.append(paragr[counter2]['textRun']['content'])
-<<<<<<< HEAD
 
-=======
->>>>>>> 22304cb4bc450cdcff1e1966fef1f2b9326bc29c
                         counter2 = counter2 + 1
             counter = counter + 1
         text_as_str = ''
