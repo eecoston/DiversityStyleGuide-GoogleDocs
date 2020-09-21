@@ -13,7 +13,7 @@ There are two ways to add the filepath. First, you can use the `GoogleDocReferen
 
 ## How to use
 Import the style guide and use the run method to use the function. 
-```
+```python
 from DiversityStyleGuide import GoogleDocReferenceDivStyleGuide
 
 GoogleDocReferenceDivStyleGuide().run()
