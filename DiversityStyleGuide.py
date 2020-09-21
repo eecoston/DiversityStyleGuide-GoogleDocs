@@ -11,6 +11,7 @@ from google_auth_oauthlib import flow
 
 
 class GoogleDocReferenceDivStyleGuide:
+<<<<<<< HEAD
     def __init__(self):
         return 'nada'
         
@@ -74,6 +75,11 @@ class GoogleDocReferenceDivStyleGuide:
         with open('API.pickle', 'wb') as f:
             pickle.dump(self.API_KEY, f)
         return (self.API_KEY)
+=======
+    def __init__(self,url):
+        self.url = url
+        self.API_KEY = r'YOUR API KEY FILENAME HERE'
+>>>>>>> 22304cb4bc450cdcff1e1966fef1f2b9326bc29c
         
     
     def justReference(self, variable):
@@ -114,10 +120,14 @@ class GoogleDocReferenceDivStyleGuide:
     def Authenticate(self):
         
         print("authenticating ...")
+<<<<<<< HEAD
         with open('API.pickle', 'rb') as f:
             self.API_KEY = pickle.load(f) 
         try:
             appflow = flow.InstalledAppFlow.from_client_secrets_file(self.API_KEY,scopes=["https://www.googleapis.com/auth/drive.readonly"]
+=======
+        appflow = flow.InstalledAppFlow.from_client_secrets_file(self.API_KEY,scopes=["https://www.googleapis.com/auth/drive.readonly"]
+>>>>>>> 22304cb4bc450cdcff1e1966fef1f2b9326bc29c
         )
         except:
             print('API KEY not valid\r\n\r\n')
@@ -146,9 +156,19 @@ class GoogleDocReferenceDivStyleGuide:
         document = service.documents().get(documentId=self.url).execute()
         extracted_json = json.dumps(document, indent=4, sort_keys=True)
         print("extraction complete\r\n\r\n\r\n")
+<<<<<<< HEAD
         
         self.docIDfromURL()
         text = extracted_json
+=======
+        return extracted_json
+    
+    
+    def URLtoGoogleDocJSONtoText(self):
+        
+        self.docIDfromURL()
+        text = self.Authenticate()
+>>>>>>> 22304cb4bc450cdcff1e1966fef1f2b9326bc29c
         print('Exporting text from Google Doc ...')
         article_as_dict = json.loads(text)
         text_as_dict = article_as_dict['body']['content']
@@ -159,15 +179,22 @@ class GoogleDocReferenceDivStyleGuide:
             if "paragraph" in text_as_dict[counter]:
                 paragr = text_as_dict[counter]['paragraph']['elements']
                 if len(paragr) == 1:
+<<<<<<< HEAD
 
                     text_as_list.append(paragr[0]['textRun']['content'])
 
+=======
+                    text_as_list.append(paragr[0]['textRun']['content'])
+>>>>>>> 22304cb4bc450cdcff1e1966fef1f2b9326bc29c
                 else:
                     counter2 = 0
                     while counter2 <= (len(paragr)-1):
                         if "textRun" in paragr[counter2]:
                             text_as_list.append(paragr[counter2]['textRun']['content'])
+<<<<<<< HEAD
 
+=======
+>>>>>>> 22304cb4bc450cdcff1e1966fef1f2b9326bc29c
                         counter2 = counter2 + 1
             counter = counter + 1
         text_as_str = ''
