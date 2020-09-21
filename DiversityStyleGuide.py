@@ -9,43 +9,45 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from google_auth_oauthlib import flow
 
+
+
 class GoogleDocReferenceDivStyleGuide:
         
         
-def run(self):
-    if path.exists('style_guide.pickle') == True:
-        useStyleGuide = input('Do you want to use the Diversity Style Guide on file or rescrape? (use/rescrape)').lower()
-        if useStyleGuide == 'use':
-            with open('style_guide.pickle','rb') as f:
-                dictionary = pickle.load(f)
+    def run(self):
+        if path.exists('style_guide.pickle') == True:
+            useStyleGuide = input('Do you want to use the Diversity Style Guide on file or rescrape? (use/rescrape)').lower()
+            if useStyleGuide == 'use':
+                with open('style_guide.pickle','rb') as f:
+                    dictionary = pickle.load(f)
+            else:
+                dictionary = self.cleanScrapedStyleguide(self.StyleGuideScraper())
+                with open('style_guide.pickle','wb') as f:
+                    pickle.dump(dictionary,f)
         else:
             dictionary = self.cleanScrapedStyleguide(self.StyleGuideScraper())
+            print('saving style guide locally (the run module will give you the option to either use the download or rescrape)')
             with open('style_guide.pickle','wb') as f:
                 pickle.dump(dictionary,f)
-    else:
-        dictionary = self.cleanScrapedStyleguide(self.StyleGuideScraper())
-        print('saving style guide locally (the run module will give you the option to either use the download or rescrape)')
-        with open('style_guide.pickle','wb') as f:
-            pickle.dump(dictionary,f)
-        print('saved')
-    self.Authentication()
-    docs_to_scrape = {}
-    docs = input('How many docs do you want to scrape?(up to 5)')
-    docs = int(docs)
-    if docs > 5:
-        print('Please enter a number up to 5')
+            print('saved')
+        self.Authentication()
+        docs_to_scrape = {}
         docs = input('How many docs do you want to scrape?(up to 5)')
-    doc_count = 1
-    while doc_count <= docs:
-        docs_to_scrape[doc_count] = input('enter the url for doc ' + str(doc_count))
-        doc_count = doc_count + 1
-    for x in docs_to_scrape:
-        self.url = docs_to_scrape[x]
-        self.docIDfromURL()
-        self.URLtoGoogleDocJSONtoText()
-        self.cleaningText()
-        self.referenceStyleGuide(dictionary)
-        print('\r\n\r\n\r\n')
+        docs = int(docs)
+        if docs > 5:
+            print('Please enter a number up to 5')
+            docs = input('How many docs do you want to scrape?(up to 5)')
+        doc_count = 1
+        while doc_count <= docs:
+            docs_to_scrape[doc_count] = input('enter the url for doc ' + str(doc_count))
+            doc_count = doc_count + 1
+        for x in docs_to_scrape:
+            self.url = docs_to_scrape[x]
+            self.docIDfromURL()
+            self.URLtoGoogleDocJSONtoText()
+            self.cleaningText()
+            self.referenceStyleGuide(dictionary)
+            print('\r\n\r\n\r\n')
             
             
     def API_KEY_init(self):
@@ -273,3 +275,7 @@ def run(self):
                 print('Location: {}\r\n\r\n{}: {}'.format(location,x,dictionary[x]))
         print('reference complete')
         return('completed\r\n\r\n')
+
+
+if __name__ == "__main__":
+    GoogleDocReferenceDivStyleGuide().run()
