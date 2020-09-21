@@ -12,7 +12,7 @@ First, go to the [Google Cloud Platform](https://console.cloud.google.com/). Cre
 There are two ways to add the filepath. First, you can use the `GoogleDocReferenceDivStyleGuide().API_KEY_init()` method. Or, you can skip to the run method. If the API key is missing, it will ask for it and save the variable locally.
 
 ## How to use
-Import the style guide ad use the run method to use the function. 
+Import the style guide and use the run method to use the function. 
 ```
 from DiversityStyleGuide import GoogleDocReferenceDivStyleGuide
 
