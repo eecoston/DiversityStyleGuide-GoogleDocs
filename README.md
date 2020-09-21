@@ -30,4 +30,4 @@ You also have the option to save your oauth authentication locally, allowing you
 
 The run method has the functionality to scrape and reference up to 5 Google Doc files. It will ask how many you want to scrape, and then ask for the url for each. The more docs you scrape at once, the more scrolling you'll have to do once the program finishes.
 
-For every style guide word found in the doc, the run method will return the location of the word in the doc, and the term and usage guidance from the style guide.
+For every style guide word found in the doc, the run method will return the location of the word in the Doc, and the term and usage guidance from the style guide.
