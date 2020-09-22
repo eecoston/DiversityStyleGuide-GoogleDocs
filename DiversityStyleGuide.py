@@ -95,7 +95,7 @@ class GoogleDocReferenceDivStyleGuide:
     
     def Authentication(self):
         print('authenticating ...')
-        if path.exists("auth.pickle"):
+        if path.exists("auth.pickle") == True:
             use_prev_auth = input('Do you want to use your previous authentication? Y/[N]')
             if use_prev_auth == 'Y':
                 with open('auth.pickle', 'rb') as f:
@@ -114,16 +114,30 @@ class GoogleDocReferenceDivStyleGuide:
     def Authenticate(self):
         
         print("authenticating ...")
-        with open('API.pickle', 'rb') as f:
-            self.API_KEY = pickle.load(f) 
-        try:
-            appflow = flow.InstalledAppFlow.from_client_secrets_file(self.API_KEY,scopes=["https://www.googleapis.com/auth/drive.readonly"]
-        )
-        except:
-            print('API KEY not valid\r\n\r\n')
-            print('Running API_KEY_init')
+        if path.exists("API.pickle") == True:
+            with open('API.pickle', 'rb') as f:
+                self.API_KEY = pickle.load(f) 
+            try:
+                appflow = flow.InstalledAppFlow.from_client_secrets_file(self.API_KEY,scopes=["https://www.googleapis.com/auth/drive.readonly"]
+            )
+            except:
+                print('API KEY not valid\r\n\r\n')
+                print('Running API_KEY_init')
+                self.API_KEY_init()
+                appflow = flow.InstalledAppFlow.from_client_secrets_file(self.API_KEY,scopes=["https://www.googleapis.com/auth/drive.readonly"])
+        else:
             self.API_KEY_init()
-            appflow = flow.InstalledAppFlow.from_client_secrets_file(self.API_KEY,scopes=["https://www.googleapis.com/auth/drive.readonly"])
+            with open('API.pickle', 'rb') as f:
+                self.API_KEY = pickle.load(f) 
+            try:
+                appflow = flow.InstalledAppFlow.from_client_secrets_file(self.API_KEY,scopes=["https://www.googleapis.com/auth/drive.readonly"]
+            )
+            except:
+                print('API KEY not valid\r\n\r\n')
+                print('Running API_KEY_init')
+                self.API_KEY_init()
+                appflow = flow.InstalledAppFlow.from_client_secrets_file(self.API_KEY,scopes=["https://www.googleapis.com/auth/drive.readonly"])
+
         launch_browser=True
         if launch_browser==False:
             appflow.run_local_server()
