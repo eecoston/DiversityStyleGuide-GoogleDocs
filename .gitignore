@@ -1,2 +1,3 @@
 DSG_API.json
 *.pickle
+/__pycache__/
