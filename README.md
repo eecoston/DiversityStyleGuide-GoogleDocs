@@ -24,6 +24,8 @@ or run the file in the shell:
 python DiversityStyleGuide.py
 ```
 
+Whenever the API key file is invalid(so the first time you use the script), the code above should automatically prompt you to enter the filepath. If for some reason it doesn't, and instead the script fails, use the import version to run the script and run `GoogleDocReferenceDivStyleGuide().API_KEY_init()`.
+
 The first time you run the function, it will scrape the [Diversity Style Guide](https://www.diversitystyleguide.com/) from its website and save locally (using pickle). Every other time, it will ask you if you want to rescrape or use the version saved locally, which saves a lot of time.
 
 You also have the option to save your oauth authentication locally, allowing you to avoid reauthenticating every single time you use the run method. If you save authentication, it will ask you if you want to reauthenticate or used the saved version.
